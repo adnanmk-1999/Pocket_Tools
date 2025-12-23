@@ -130,6 +130,8 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+
+
     defaultConfig {
         applicationId "com.my_first_app"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -137,6 +139,11 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    buildFeatures {
+        prefab false
+    }
+
     splits {
         abi {
             reset()
