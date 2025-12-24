@@ -10,9 +10,9 @@ import {
 import colors from '../../config/colors';
 
 const tools = [
-  { name: 'Calculator', screen: 'Calculator', icon: require('../../assets/logoEMU.png') },
-  { name: 'Unit Converter', screen: 'UnitConverter', icon: require('../../assets/logoEMU.png') },
-  { name: 'Timer & Stopwatch', screen: 'Timer', icon: require('../../assets/logoEMU.png') },
+  { name: 'Calculator', screen: 'Calculator', icon: require('../../assets/icons/calculator.png') },
+  { name: 'Unit Converter', screen: 'UnitConverter', icon: require('../../assets/icons/converter.png') },
+  { name: 'Timer & Stopwatch', screen: 'Timer', icon: require('../../assets/icons/timer.png') },
 ];
 
 const Home = ({ navigation }) => {
