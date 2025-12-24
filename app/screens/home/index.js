@@ -1,47 +1,83 @@
 import React from 'react';
 import {
   View,
-  ImageBackground,
-  Image,
   Text,
-  TouchableOpacity,
+  StyleSheet,
+  Pressable,
+  Image,
 } from 'react-native';
 
-import styles from './styles';
+import colors from '../../config/colors';
 
-function Home({navigation}) {
+const tools = [
+  { name: 'Calculator', screen: 'Calculator', icon: require('../../assets/logoEMU.png') },
+  { name: 'Unit Converter', screen: 'UnitConverter', icon: require('../../assets/logoEMU.png') },
+  { name: 'Timer & Stopwatch', screen: 'Timer', icon: require('../../assets/logoEMU.png') },
+];
+
+const Home = ({ navigation }) => {
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require('../../assets/backgroundLeaves.jpg')}>
-      <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={require('../../assets/logoEMU.png')}></Image>
-        <Text>Emergency Alert Management System </Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Pocket Tools</Text>
+      <Text style={styles.subtitle}>Essential tools. Offline.</Text>
+
+      <View style={styles.grid}>
+        {tools.map((tool) => (
+          <Pressable
+            key={tool.name}
+            style={styles.tile}
+            onPress={() => navigation.navigate(tool.screen)}
+          >
+            <Image source={tool.icon} style={styles.icon} />
+            <Text style={styles.tileText}>{tool.name}</Text>
+          </Pressable>
+        ))}
       </View>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Calculator')}>
-        <Text style={styles.buttonText}>Go to Calculator</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Registration')}>
-        <Text style={styles.buttonText}>Register Yourself</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Planets')}>
-        <Text style={styles.buttonText}>List of Planets</Text>
-      </TouchableOpacity>
-
-      <View style={styles.loginButton}></View>
-      <View style={styles.registerButton}></View>
-    </ImageBackground>
+    </View>
   );
-}
+};
 
 export default Home;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background || '#000',
+    padding: 20,
+  },
+  title: {
+    fontSize: 32,
+    color: '#fff',
+    fontWeight: '700',
+    marginBottom: 5,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#aaa',
+    marginBottom: 30,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  tile: {
+    width: '47%',
+    backgroundColor: '#111',
+    borderRadius: 12,
+    padding: 20,
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  icon: {
+    width: 48,
+    height: 48,
+    marginBottom: 10,
+  },
+  tileText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+});
