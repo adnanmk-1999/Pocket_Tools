@@ -6,6 +6,11 @@ import Home from '../screens/home';
 import Calculator from '../screens/calculator';
 import UnitConverter from '../screens/unitConverter';
 import Timer from '../screens/timer';
+import BMICalculator from '../screens/bmi';
+import DiscountCalculator from '../screens/discount';
+import CurrencyConverter from '../screens/currency';
+import TimezoneClock from '../screens/timezone';
+import InvestmentReturnSimulator from '../screens/investment';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +41,31 @@ const Routes = () => {
           name="Timer"
           component={Timer}
           options={{ title: 'Timer & Stopwatch' }}
+        />
+        <Stack.Screen
+          name="BMI"
+          component={BMICalculator}
+          options={{ title: 'BMI Calculator' }}
+        />
+        <Stack.Screen
+          name="Discount"
+          component={DiscountCalculator}
+          options={{ title: 'Discount Calculator' }}
+        />
+        <Stack.Screen
+          name="Currency"
+          component={CurrencyConverter}
+          options={{ title: 'Currency Converter' }}
+        />
+        <Stack.Screen
+          name="Timezone"
+          component={TimezoneClock}
+          options={{ title: 'World Time' }}
+        />
+        <Stack.Screen
+          name="Investment"
+          component={InvestmentReturnSimulator}
+          options={{ title: 'Investment Simulator' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

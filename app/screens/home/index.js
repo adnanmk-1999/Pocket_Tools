@@ -7,13 +7,17 @@ import {
   Image,
 } from 'react-native';
 
-import colors from '../../config/colors';
-
 const tools = [
   { name: 'Calculator', screen: 'Calculator', icon: require('../../assets/icons/calculator.png') },
   { name: 'Unit Converter', screen: 'UnitConverter', icon: require('../../assets/icons/converter.png') },
   { name: 'Timer & Stopwatch', screen: 'Timer', icon: require('../../assets/icons/timer.png') },
-];
+  { name: 'BMI Calculator', screen: 'BMI', icon: require('../../assets/icons/bmi.png') },
+  { name: 'Discount Calculator', screen: 'Discount', icon: require('../../assets/icons/discount.png') },
+  { name: 'Currency Converter', screen: 'Currency', icon: require('../../assets/icons/currency.png') },
+  { name: 'World Time', screen: 'Timezone', icon: require('../../assets/icons/timezone.png') },
+  { name: 'Investment Simulator', screen: 'Investment', icon: require('../../assets/icons/investment.png') },
+]
+  ;
 
 const Home = ({ navigation }) => {
   return (
@@ -42,7 +46,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background || '#000',
+    backgroundColor: '#000',
     padding: 20,
   },
   title: {
