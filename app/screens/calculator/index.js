@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   Alert,
-  SafeAreaView,
 } from 'react-native';
 
+import Screen from '../../screens';
 import NumberButtons from '../../components/numberButton';
 import HistoryView from '../../components/historyView';
-import colors from '../../config/colors';
 
+import styles from './styles';
+
+/* ---------- Expression Evaluation ---------- */
 const evaluateExpression = (expression) => {
   try {
     if (!expression) return null;
@@ -73,46 +74,36 @@ const Calculator = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.displayContainer}>
-        <Text style={styles.outputText}>
-          {output || '0'}
-        </Text>
+    <Screen>
+      <View style={styles.container}>
+        {/* ---------- Display ---------- */}
+        <View style={styles.displayContainer}>
+          <Text style={styles.outputText}>
+            {output || '0'}
+          </Text>
+        </View>
+
+        {/* ---------- History + Keypad Stack ---------- */}
+        <View style={styles.bottomStack}>
+          <View style={styles.historyContainer}>
+            <HistoryView
+              data={history}
+              onClear={clearHistory}
+            />
+          </View>
+
+          <View style={styles.keypadContainer}>
+            <NumberButtons
+              onPress={handleInput}
+              onClear={handleClear}
+              onDelete={handleDelete}
+              onEqual={handleEquals}
+            />
+          </View>
+        </View>
       </View>
-
-      <HistoryView
-        data={history}
-        onClear={clearHistory}
-      />
-
-      <NumberButtons
-        onPress={handleInput}
-        onClear={handleClear}
-        onDelete={handleDelete}
-        onEqual={handleEquals}
-      />
-    </SafeAreaView>
+    </Screen>
   );
 };
 
 export default Calculator;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background || '#000',
-  },
-  displayContainer: {
-    padding: 20,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    minHeight: 120,
-    borderBottomWidth: 1,
-    borderBottomColor: '#333',
-  },
-  outputText: {
-    fontSize: 36,
-    color: '#fff',
-    fontWeight: '600',
-  },
-});
