@@ -1,4 +1,4 @@
-package com.my_first_app;
+package com.pocket_tools;
 
 import com.facebook.react.ReactActivity;
 
@@ -12,7 +12,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "my_first_app";
+    return "pocket_tools";
   }
   @Override
   protected void onCreate(Bundle savedInstanceState) {

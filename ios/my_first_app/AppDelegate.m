@@ -33,7 +33,7 @@ static void InitializeFlipper(UIApplication *application) {
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                   moduleName:@"my_first_app"
+                                                   moduleName:@"pocket_tools"
                                             initialProperties:nil];
 
   if (@available(iOS 13.0, *)) {
