@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import {
     View,
     Text,
-    StyleSheet,
     TextInput,
     Pressable,
 } from 'react-native';
+
+import Screen from '../../screens';
+import styles from './styles';
 
 const DiscountCalculator = () => {
     const [price, setPrice] = useState('');
@@ -31,92 +33,63 @@ const DiscountCalculator = () => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Discount Calculator</Text>
+        <Screen>
+            <View style={styles.container}>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Original Price"
-                placeholderTextColor="#666"
-                keyboardType="numeric"
-                value={price}
-                onChangeText={setPrice}
-            />
+                {/* ---------- Helper Text ---------- */}
+                <Text style={styles.helperText}>
+                    Enter price and discount to calculate savings.
+                </Text>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Discount (%)"
-                placeholderTextColor="#666"
-                keyboardType="numeric"
-                value={discount}
-                onChangeText={setDiscount}
-            />
-
-            <Pressable style={styles.button} onPress={calculateDiscount}>
-                <Text style={styles.buttonText}>Calculate</Text>
-            </Pressable>
-
-            {finalPrice !== null && (
-                <View style={styles.result}>
-                    <Text style={styles.resultText}>
-                        You save: {savedAmount.toFixed(2)}
-                    </Text>
-                    <Text style={styles.finalPrice}>
-                        Final Price: {finalPrice.toFixed(2)}
-                    </Text>
+                {/* ---------- Inputs ---------- */}
+                <View style={styles.card}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Original Price"
+                        placeholderTextColor="#666"
+                        keyboardType="numeric"
+                        value={price}
+                        onChangeText={setPrice}
+                    />
                 </View>
-            )}
-        </View>
+
+                <View style={styles.card}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Discount (%)"
+                        placeholderTextColor="#666"
+                        keyboardType="numeric"
+                        value={discount}
+                        onChangeText={setDiscount}
+                    />
+                </View>
+
+                {/* ---------- Calculate ---------- */}
+                <Pressable
+                    onPress={calculateDiscount}
+                    style={({ pressed }) => [
+                        styles.primaryButton,
+                        pressed && styles.buttonPressed,
+                    ]}
+                >
+                    <Text style={styles.buttonText}>Calculate</Text>
+                </Pressable>
+
+                {/* ---------- Result ---------- */}
+                {finalPrice !== null && (
+                    <View style={styles.resultCard}>
+                        <Text style={styles.savedText}>
+                            You save {savedAmount.toFixed(2)}
+                        </Text>
+                        <Text style={styles.finalPrice}>
+                            {finalPrice.toFixed(2)}
+                        </Text>
+                    </View>
+                )}
+
+            </View>
+        </Screen>
     );
 };
 
 export default DiscountCalculator;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000',
-        padding: 20,
-    },
-    title: {
-        color: '#fff',
-        fontSize: 26,
-        fontWeight: '700',
-        marginBottom: 30,
-        textAlign: 'center',
-    },
-    input: {
-        backgroundColor: '#111',
-        borderRadius: 8,
-        padding: 14,
-        color: '#fff',
-        fontSize: 16,
-        marginBottom: 15,
-    },
-    button: {
-        backgroundColor: '#1e90ff',
-        padding: 14,
-        borderRadius: 10,
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    result: {
-        marginTop: 30,
-        alignItems: 'center',
-    },
-    resultText: {
-        color: '#aaa',
-        fontSize: 16,
-        marginBottom: 6,
-    },
-    finalPrice: {
-        color: '#fff',
-        fontSize: 22,
-        fontWeight: '600',
-    },
-});

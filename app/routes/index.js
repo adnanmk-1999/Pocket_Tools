@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from '../screens/home';
 import Calculator from '../screens/calculator';
-import UnitConverter from '../screens/unitConverter';
+import UnitConverter from '../screens/converter';
 import Timer from '../screens/timer';
 import BMICalculator from '../screens/bmi';
 import DiscountCalculator from '../screens/discount';

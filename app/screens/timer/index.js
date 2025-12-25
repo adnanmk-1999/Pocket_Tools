@@ -2,14 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
     View,
     Text,
-    StyleSheet,
     Pressable,
     TextInput,
     ScrollView,
 } from 'react-native';
 
-/* ---------- Helpers ---------- */
+import Screen from '../../screens';
+import styles from './styles';
 
+/* ---------- Helpers ---------- */
 const formatTime = (ms) => {
     const totalSeconds = Math.max(0, Math.floor(ms / 1000));
     const seconds = totalSeconds % 60;
@@ -20,32 +21,27 @@ const formatTime = (ms) => {
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 };
 
-/* ---------- Screen ---------- */
-
 const TimerScreen = () => {
-    const [mode, setMode] = useState('stopwatch'); // stopwatch | timer
+    const [mode, setMode] = useState('stopwatch');
 
-    /* ---- Stopwatch State ---- */
     const [isRunning, setIsRunning] = useState(false);
     const [elapsed, setElapsed] = useState(0);
     const [laps, setLaps] = useState([]);
 
-    const startRef = useRef(null);
-    const intervalRef = useRef(null);
-
-    /* ---- Timer State ---- */
     const [minutes, setMinutes] = useState('0');
     const [seconds, setSeconds] = useState('0');
     const [remaining, setRemaining] = useState(0);
     const [timerRunning, setTimerRunning] = useState(false);
 
-    /* ---------- Stopwatch Effect ---------- */
+    const startRef = useRef(null);
+    const intervalRef = useRef(null);
+
+    /* ---------- Stopwatch ---------- */
     useEffect(() => {
         if (mode !== 'stopwatch') return;
 
         if (isRunning) {
             startRef.current = Date.now() - elapsed;
-
             intervalRef.current = setInterval(() => {
                 setElapsed(Date.now() - startRef.current);
             }, 50);
@@ -56,14 +52,9 @@ const TimerScreen = () => {
         return () => clearInterval(intervalRef.current);
     }, [isRunning, mode]);
 
-    /* ---------- Timer Effect ---------- */
+    /* ---------- Timer ---------- */
     useEffect(() => {
-        if (mode !== 'timer') return;
-
-        if (!timerRunning || remaining <= 0) {
-            clearInterval(intervalRef.current);
-            return;
-        }
+        if (mode !== 'timer' || !timerRunning) return;
 
         intervalRef.current = setInterval(() => {
             setRemaining((prev) => {
@@ -77,22 +68,8 @@ const TimerScreen = () => {
         }, 1000);
 
         return () => clearInterval(intervalRef.current);
-    }, [timerRunning, remaining, mode]);
+    }, [timerRunning, mode]);
 
-    /* ---------- Stopwatch Handlers ---------- */
-    const toggleStopwatch = () => setIsRunning((p) => !p);
-
-    const resetStopwatch = () => {
-        setIsRunning(false);
-        setElapsed(0);
-        setLaps([]);
-    };
-
-    const addLap = () => {
-        setLaps((prev) => [elapsed, ...prev]);
-    };
-
-    /* ---------- Timer Handlers ---------- */
     const startTimer = () => {
         const total =
             parseInt(minutes || '0', 10) * 60000 +
@@ -104,81 +81,106 @@ const TimerScreen = () => {
         }
     };
 
-    const resetTimer = () => {
+    const resetAll = () => {
+        setIsRunning(false);
         setTimerRunning(false);
+        setElapsed(0);
         setRemaining(0);
+        setLaps([]);
     };
 
-    /* ---------- UI ---------- */
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Timer & Stopwatch</Text>
+        <Screen>
+            <View style={styles.container}>
 
-            {/* Mode Toggle */}
-            <View style={styles.modeSwitch}>
-                <Pressable
-                    style={[
-                        styles.modeButton,
-                        mode === 'stopwatch' && styles.modeActive,
-                    ]}
-                    onPress={() => {
-                        setMode('stopwatch');
-                        resetTimer();
-                    }}
-                >
-                    <Text style={styles.modeText}>Stopwatch</Text>
-                </Pressable>
+                {/* ---------- Helper ---------- */}
+                <Text style={styles.helperText}>
+                    Choose a mode and control time.
+                </Text>
 
-                <Pressable
-                    style={[
-                        styles.modeButton,
-                        mode === 'timer' && styles.modeActive,
-                    ]}
-                    onPress={() => {
-                        setMode('timer');
-                        resetStopwatch();
-                    }}
-                >
-                    <Text style={styles.modeText}>Timer</Text>
-                </Pressable>
-            </View>
-
-            {/* Stopwatch */}
-            {mode === 'stopwatch' && (
-                <>
-                    <Text style={styles.time}>
-                        {formatTime(elapsed)}
-                    </Text>
-
-                    <View style={styles.controls}>
+                {/* ---------- Tabs (MATCH UNIT CONVERTER) ---------- */}
+                <View style={styles.segment}>
+                    {['stopwatch', 'timer'].map((type) => (
                         <Pressable
-                            style={[
-                                styles.button,
-                                isRunning ? styles.pause : styles.start,
+                            key={type}
+                            onPress={() => {
+                                setMode(type);
+                                resetAll();
+                            }}
+                            style={({ pressed }) => [
+                                styles.segmentButton,
+                                mode === type && styles.segmentActive,
+                                pressed && styles.pressed,
                             ]}
-                            onPress={toggleStopwatch}
                         >
-                            <Text style={styles.buttonText}>
-                                {isRunning ? 'Pause' : 'Start'}
+                            <Text style={styles.segmentText}>
+                                {type === 'stopwatch' ? 'Stopwatch' : 'Timer'}
                             </Text>
                         </Pressable>
+                    ))}
+                </View>
 
+                {/* ---------- Time ---------- */}
+                <Text style={styles.time}>
+                    {mode === 'stopwatch'
+                        ? formatTime(elapsed)
+                        : formatTime(remaining)}
+                </Text>
+
+                {/* ---------- Controls (Bubble Style) ---------- */}
+                <View style={styles.controls}>
+
+                    {/* Start / Pause */}
+                    <Pressable
+                        onPress={
+                            mode === 'stopwatch'
+                                ? () => setIsRunning((p) => !p)
+                                : startTimer
+                        }
+                        style={({ pressed }) => [
+                            styles.bubble,
+                            styles.primary,
+                            pressed && styles.bubblePressed,
+                        ]}
+                    >
+                        <Text style={styles.bubbleText}>
+                            {mode === 'stopwatch'
+                                ? isRunning ? 'Pause' : 'Start'
+                                : 'Start'}
+                        </Text>
+                    </Pressable>
+
+                    {/* Lap */}
+                    {mode === 'stopwatch' && (
                         <Pressable
-                            style={[styles.button, styles.lap]}
                             disabled={!isRunning}
-                            onPress={addLap}
+                            onPress={() => setLaps((p) => [elapsed, ...p])}
+                            style={({ pressed }) => [
+                                styles.bubble,
+                                styles.neutral,
+                                pressed && styles.bubblePressed,
+                            ]}
                         >
-                            <Text style={styles.buttonText}>Lap</Text>
+                            <Text style={styles.bubbleText}>Lap</Text>
                         </Pressable>
+                    )}
 
-                        <Pressable
-                            style={[styles.button, styles.reset]}
-                            onPress={resetStopwatch}
-                        >
-                            <Text style={styles.buttonText}>Reset</Text>
-                        </Pressable>
-                    </View>
+                    {/* Reset */}
+                    <Pressable
+                        onPress={resetAll}
+                        style={({ pressed }) => [
+                            styles.bubble,
+                            styles.danger,
+                            pressed && styles.bubblePressed,
+                        ]}
+                    >
+                        <Text style={styles.bubbleText}>Reset</Text>
+                    </Pressable>
 
+                </View>
+
+                {/* ---------- Laps ---------- */}
+                {mode === 'stopwatch' && (
                     <ScrollView style={styles.laps}>
                         {laps.map((lap, i) => (
                             <View key={i} style={styles.lapRow}>
@@ -191,12 +193,10 @@ const TimerScreen = () => {
                             </View>
                         ))}
                     </ScrollView>
-                </>
-            )}
+                )}
 
-            {/* Timer */}
-            {mode === 'timer' && (
-                <>
+                {/* ---------- Timer Inputs ---------- */}
+                {mode === 'timer' && (
                     <View style={styles.timerInputs}>
                         <TextInput
                             style={styles.input}
@@ -216,136 +216,11 @@ const TimerScreen = () => {
                             placeholderTextColor="#666"
                         />
                     </View>
+                )}
 
-                    <Text style={styles.time}>
-                        {formatTime(remaining)}
-                    </Text>
-
-                    <View style={styles.controls}>
-                        <Pressable
-                            style={[styles.button, styles.start]}
-                            onPress={startTimer}
-                        >
-                            <Text style={styles.buttonText}>Start</Text>
-                        </Pressable>
-
-                        <Pressable
-                            style={[styles.button, styles.reset]}
-                            onPress={resetTimer}
-                        >
-                            <Text style={styles.buttonText}>Reset</Text>
-                        </Pressable>
-                    </View>
-                </>
-            )}
-        </View>
+            </View>
+        </Screen>
     );
 };
 
 export default TimerScreen;
-
-/* ---------- Styles ---------- */
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000',
-        padding: 20,
-    },
-    title: {
-        color: '#fff',
-        fontSize: 26,
-        fontWeight: '700',
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    modeSwitch: {
-        flexDirection: 'row',
-        marginBottom: 30,
-    },
-    modeButton: {
-        flex: 1,
-        padding: 12,
-        backgroundColor: '#111',
-        borderRadius: 8,
-        marginHorizontal: 5,
-        alignItems: 'center',
-    },
-    modeActive: {
-        backgroundColor: '#333',
-    },
-    modeText: {
-        color: '#fff',
-        fontWeight: '500',
-    },
-    time: {
-        color: '#fff',
-        fontSize: 40,
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    controls: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 20,
-    },
-    button: {
-        flex: 1,
-        marginHorizontal: 5,
-        paddingVertical: 14,
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    start: {
-        backgroundColor: '#1e90ff',
-    },
-    pause: {
-        backgroundColor: '#ff8c00',
-    },
-    lap: {
-        backgroundColor: '#333',
-    },
-    reset: {
-        backgroundColor: '#aa3333',
-    },
-    buttonText: {
-        color: '#fff',
-        fontWeight: '600',
-    },
-    laps: {
-        marginTop: 10,
-    },
-    lapRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingVertical: 6,
-        borderBottomWidth: 1,
-        borderBottomColor: '#222',
-    },
-    lapText: {
-        color: '#aaa',
-    },
-    lapTime: {
-        color: '#fff',
-    },
-    timerInputs: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginBottom: 20,
-    },
-    input: {
-        width: 70,
-        backgroundColor: '#111',
-        borderRadius: 8,
-        padding: 12,
-        textAlign: 'center',
-        color: '#fff',
-        fontSize: 18,
-    },
-    colon: {
-        color: '#fff',
-        fontSize: 22,
-        marginHorizontal: 8,
-        alignSelf: 'center',
-    },
-});

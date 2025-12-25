@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import {
     View,
     Text,
-    StyleSheet,
     TextInput,
     Pressable,
 } from 'react-native';
 
+import Screen from '../../screens';
+import styles from './styles';
+
+/* ---------- Helpers ---------- */
 const getCategory = (bmi) => {
     if (bmi < 18.5) return 'Underweight';
     if (bmi < 25) return 'Normal weight';
@@ -30,98 +33,69 @@ const BMICalculator = () => {
             return;
         }
 
-        const bmiValue = w / ((h / 100) ** 2);
-        setBmi(bmiValue);
-        setCategory(getCategory(bmiValue));
+        const value = w / ((h / 100) ** 2);
+        setBmi(value);
+        setCategory(getCategory(value));
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>BMI Calculator</Text>
+        <Screen>
+            <View style={styles.container}>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Height (cm)"
-                placeholderTextColor="#666"
-                keyboardType="numeric"
-                value={height}
-                onChangeText={setHeight}
-            />
+                {/* ---------- Helper Text ---------- */}
+                <Text style={styles.helperText}>
+                    Enter your height and weight to calculate BMI.
+                </Text>
 
-            <TextInput
-                style={styles.input}
-                placeholder="Weight (kg)"
-                placeholderTextColor="#666"
-                keyboardType="numeric"
-                value={weight}
-                onChangeText={setWeight}
-            />
-
-            <Pressable style={styles.button} onPress={calculateBMI}>
-                <Text style={styles.buttonText}>Calculate</Text>
-            </Pressable>
-
-            {bmi && (
-                <View style={styles.result}>
-                    <Text style={styles.bmiValue}>
-                        BMI: {bmi.toFixed(1)}
-                    </Text>
-                    <Text style={styles.category}>
-                        {category}
-                    </Text>
+                {/* ---------- Inputs ---------- */}
+                <View style={styles.card}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Height (cm)"
+                        placeholderTextColor="#666"
+                        keyboardType="numeric"
+                        value={height}
+                        onChangeText={setHeight}
+                    />
                 </View>
-            )}
-        </View>
+
+                <View style={styles.card}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Weight (kg)"
+                        placeholderTextColor="#666"
+                        keyboardType="numeric"
+                        value={weight}
+                        onChangeText={setWeight}
+                    />
+                </View>
+
+                {/* ---------- Calculate ---------- */}
+                <Pressable
+                    onPress={calculateBMI}
+                    style={({ pressed }) => [
+                        styles.primaryButton,
+                        pressed && styles.buttonPressed,
+                    ]}
+                >
+                    <Text style={styles.buttonText}>Calculate</Text>
+                </Pressable>
+
+                {/* ---------- Result ---------- */}
+                {bmi !== null && (
+                    <View style={styles.resultCard}>
+                        <Text style={styles.bmiValue}>
+                            {bmi.toFixed(1)}
+                        </Text>
+                        <Text style={styles.category}>
+                            {category}
+                        </Text>
+                    </View>
+                )}
+
+            </View>
+        </Screen>
     );
 };
 
 export default BMICalculator;
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000',
-        padding: 20,
-    },
-    title: {
-        color: '#fff',
-        fontSize: 26,
-        fontWeight: '700',
-        marginBottom: 30,
-        textAlign: 'center',
-    },
-    input: {
-        backgroundColor: '#111',
-        borderRadius: 8,
-        padding: 14,
-        color: '#fff',
-        fontSize: 16,
-        marginBottom: 15,
-    },
-    button: {
-        backgroundColor: '#1e90ff',
-        padding: 14,
-        borderRadius: 10,
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    result: {
-        marginTop: 30,
-        alignItems: 'center',
-    },
-    bmiValue: {
-        color: '#fff',
-        fontSize: 24,
-        fontWeight: '600',
-        marginBottom: 6,
-    },
-    category: {
-        color: '#aaa',
-        fontSize: 16,
-    },
-});

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
-    StyleSheet,
     Pressable,
 } from 'react-native';
+
+import Screen from '../../screens';
+import styles from './styles';
 
 /* ---------- Supported Clocks ---------- */
 const ZONES = [
@@ -31,7 +33,7 @@ const applyOffset = (date, minutes) =>
     new Date(date.getTime() + minutes * 60000);
 
 /* ---------- Screen ---------- */
-const TimezoneClock = () => {
+const WorldClock = () => {
     const [now, setNow] = useState(new Date());
     const [zone, setZone] = useState(ZONES[0]);
 
@@ -44,88 +46,46 @@ const TimezoneClock = () => {
         zone.offset === null ? now : applyOffset(now, zone.offset);
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>World Clock</Text>
+        <Screen>
+            <View style={styles.container}>
+                {/* Helper text */}
+                <Text style={styles.helperText}>
+                    Select a timezone to view current time.
+                </Text>
 
-            <Text style={styles.time}>
-                {formatTime(displayTime)}
-            </Text>
+                {/* Time */}
+                <Text style={styles.time}>
+                    {formatTime(displayTime)}
+                </Text>
 
-            <Text style={styles.zone}>
-                {zone.label}
-            </Text>
+                <Text style={styles.zone}>
+                    {zone.label}
+                </Text>
 
-            <View style={styles.list}>
-                {ZONES.map((z) => (
-                    <Pressable
-                        key={z.label}
-                        style={[
-                            styles.button,
-                            z.label === zone.label && styles.active,
-                        ]}
-                        onPress={() => setZone(z)}
-                    >
-                        <Text style={styles.text}>{z.label}</Text>
-                    </Pressable>
-                ))}
+                {/* Timezone bubbles */}
+                <View style={styles.wrap}>
+                    {ZONES.map((z) => (
+                        <Pressable
+                            key={z.label}
+                            onPress={() => setZone(z)}
+                            style={({ pressed }) => [
+                                styles.zoneButton,
+                                z.label === zone.label && styles.zoneActive,
+                                pressed && styles.pressed,
+                            ]}
+                        >
+                            <Text style={styles.zoneText}>{z.label}</Text>
+                        </Pressable>
+                    ))}
+                </View>
+
+                <Text style={styles.info}>
+                    Uses device clock. Fixed offsets are shown where full timezone
+                    support is not available on all devices.
+                </Text>
             </View>
-
-            <Text style={styles.info}>
-                Uses device clock. Fixed offsets are shown where full timezone
-                support is not available on all devices.
-            </Text>
-        </View>
+        </Screen>
     );
 };
 
-export default TimezoneClock;
-
-/* ---------- Styles ---------- */
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000',
-        padding: 20,
-    },
-    title: {
-        color: '#fff',
-        fontSize: 26,
-        fontWeight: '700',
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    time: {
-        color: '#fff',
-        fontSize: 42,
-        fontWeight: '600',
-        textAlign: 'center',
-    },
-    zone: {
-        color: '#aaa',
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    list: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-    },
-    button: {
-        backgroundColor: '#111',
-        padding: 10,
-        borderRadius: 6,
-        marginRight: 8,
-        marginBottom: 8,
-    },
-    active: {
-        backgroundColor: '#333',
-    },
-    text: {
-        color: '#fff',
-    },
-    info: {
-        color: '#666',
-        fontSize: 12,
-        textAlign: 'center',
-        marginTop: 20,
-    },
-});
+export default WorldClock;

@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
-    StyleSheet,
     TextInput,
     Pressable,
     ActivityIndicator,
     ScrollView,
 } from 'react-native';
 
-/* ---------- Default fallback rates (offline) ---------- */
-/* Base: EUR — Daily reference values (may differ from real-time) */
+import Screen from '../../screens';
+import styles from './styles';
 
+/* ---------- Offline fallback (EUR base) ---------- */
 const DEFAULT_RATES = {
     AUD: 1.7607,
     BGN: 1.9558,
@@ -54,18 +54,16 @@ const CurrencyConverter = () => {
     const [loading, setLoading] = useState(true);
     const [offline, setOffline] = useState(false);
 
-    /* ---------- Fetch daily rates ---------- */
     useEffect(() => {
         const fetchRates = async () => {
             try {
-                const response = await fetch('https://api.frankfurter.app/latest');
-                const data = await response.json();
-
-                if (data && data.rates) {
+                const res = await fetch('https://api.frankfurter.app/latest');
+                const data = await res.json();
+                if (data?.rates) {
                     setRates(data.rates);
                     setOffline(false);
                 }
-            } catch (error) {
+            } catch {
                 setOffline(true);
             } finally {
                 setLoading(false);
@@ -75,7 +73,6 @@ const CurrencyConverter = () => {
         fetchRates();
     }, []);
 
-    /* ---------- Conversion logic ---------- */
     const convert = () => {
         const value = parseFloat(amount);
         if (isNaN(value)) {
@@ -83,197 +80,128 @@ const CurrencyConverter = () => {
             return;
         }
 
-        if (base === 'EUR') {
-            setResult(value * rates[target]);
-        } else {
-            const valueInEur = value / rates[base];
-            setResult(valueInEur * rates[target]);
-        }
+        const eurValue = base === 'EUR'
+            ? value
+            : value / rates[base];
+
+        setResult(eurValue * rates[target]);
     };
 
     const currencies = ['EUR', ...Object.keys(rates)];
 
     return (
-        <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.content}
-            keyboardShouldPersistTaps="handled"
-        >
-            <Text style={styles.title}>Currency Converter</Text>
+        <Screen>
+            <ScrollView
+                contentContainerStyle={styles.content}
+                keyboardShouldPersistTaps="handled"
+            >
 
-            <Text style={styles.info}>
-                Uses European Central Bank daily exchange rates.
-            </Text>
-
-            {offline && (
-                <Text style={styles.warning}>
-                    Not connected to internet. Rates may differ from real-time values.
+                {/* ---------- Helper ---------- */}
+                <Text style={styles.helperText}>
+                    Convert currencies using daily ECB exchange rates.
                 </Text>
-            )}
 
-            {loading ? (
-                <ActivityIndicator size="large" color="#1e90ff" />
-            ) : (
-                <>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Amount"
-                        placeholderTextColor="#666"
-                        keyboardType="numeric"
-                        value={amount}
-                        onChangeText={setAmount}
-                    />
+                {offline && (
+                    <Text style={styles.warning}>
+                        Offline mode — rates may differ from real-time values.
+                    </Text>
+                )}
 
-                    <View style={styles.row}>
-                        <View style={styles.select}>
-                            <Text style={styles.selectText}>{base}</Text>
+                {loading ? (
+                    <ActivityIndicator size="large" color="#6C5CE7" />
+                ) : (
+                    <>
+                        {/* ---------- Amount ---------- */}
+                        <View style={styles.card}>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Amount"
+                                placeholderTextColor="#666"
+                                keyboardType="numeric"
+                                value={amount}
+                                onChangeText={setAmount}
+                            />
                         </View>
 
-                        <View style={styles.select}>
-                            <Text style={styles.selectText}>to {target}</Text>
+                        {/* ---------- Current Selection ---------- */}
+                        <View style={styles.exchangeRow}>
+                            <View style={styles.pill}>
+                                <Text style={styles.pillText}>{base}</Text>
+                            </View>
+
+                            <Text style={styles.arrow}>→</Text>
+
+                            <View style={styles.pill}>
+                                <Text style={styles.pillText}>{target}</Text>
+                            </View>
                         </View>
-                    </View>
 
-                    <Text style={styles.sectionTitle}>From</Text>
-                    <View style={styles.row}>
-                        {currencies.map((cur) => (
-                            <Pressable
-                                key={cur}
-                                style={[
-                                    styles.currencyButton,
-                                    base === cur && styles.active,
-                                ]}
-                                onPress={() => setBase(cur)}
-                            >
-                                <Text style={styles.currencyText}>{cur}</Text>
-                            </Pressable>
-                        ))}
-                    </View>
+                        {/* ---------- Convert ---------- */}
+                        <Pressable
+                            onPress={convert}
+                            style={({ pressed }) => [
+                                styles.primaryButton,
+                                pressed && styles.buttonPressed,
+                            ]}
+                        >
+                            <Text style={styles.buttonText}>Convert</Text>
+                        </Pressable>
 
-                    <Text style={styles.sectionTitle}>To</Text>
-                    <View style={styles.row}>
-                        {currencies.map((cur) => (
-                            <Pressable
-                                key={cur}
-                                style={[
-                                    styles.currencyButton,
-                                    target === cur && styles.active,
-                                ]}
-                                onPress={() => setTarget(cur)}
-                            >
-                                <Text style={styles.currencyText}>{cur}</Text>
-                            </Pressable>
-                        ))}
-                    </View>
+                        {/* ---------- Result ---------- */}
+                        {result !== null && (
+                            <View style={styles.resultCard}>
+                                <Text style={styles.resultValue}>
+                                    {result.toFixed(2)}
+                                </Text>
+                                <Text style={styles.resultUnit}>
+                                    {target}
+                                </Text>
+                            </View>
+                        )}
 
-                    <Pressable style={styles.button} onPress={convert}>
-                        <Text style={styles.buttonText}>Convert</Text>
-                    </Pressable>
 
-                    {result !== null && (
-                        <Text style={styles.result}>
-                            Result: {result.toFixed(2)} {target}
-                        </Text>
-                    )}
-                </>
-            )}
-        </ScrollView>
+                        {/* ---------- From ---------- */}
+                        <Text style={styles.sectionTitle}>From</Text>
+                        <View style={styles.wrap}>
+                            {currencies.map((cur) => (
+                                <Pressable
+                                    key={cur}
+                                    onPress={() => setBase(cur)}
+                                    style={({ pressed }) => [
+                                        styles.bubble,
+                                        base === cur && styles.bubbleActive,
+                                        pressed && styles.bubblePressed,
+                                    ]}
+                                >
+                                    <Text style={styles.bubbleText}>{cur}</Text>
+                                </Pressable>
+                            ))}
+                        </View>
+
+                        {/* ---------- To ---------- */}
+                        <Text style={styles.sectionTitle}>To</Text>
+                        <View style={styles.wrap}>
+                            {currencies.map((cur) => (
+                                <Pressable
+                                    key={cur}
+                                    onPress={() => setTarget(cur)}
+                                    style={({ pressed }) => [
+                                        styles.bubble,
+                                        target === cur && styles.bubbleActive,
+                                        pressed && styles.bubblePressed,
+                                    ]}
+                                >
+                                    <Text style={styles.bubbleText}>{cur}</Text>
+                                </Pressable>
+                            ))}
+                        </View>
+
+
+                    </>
+                )}
+            </ScrollView>
+        </Screen>
     );
 };
 
 export default CurrencyConverter;
-
-/* ---------- Styles ---------- */
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000',
-    },
-    content: {
-        padding: 20,
-        paddingBottom: 40,
-    },
-    title: {
-        color: '#fff',
-        fontSize: 26,
-        fontWeight: '700',
-        marginBottom: 10,
-        textAlign: 'center',
-    },
-    info: {
-        color: '#aaa',
-        fontSize: 13,
-        textAlign: 'center',
-        marginBottom: 10,
-    },
-    warning: {
-        color: '#ffcc00',
-        fontSize: 13,
-        textAlign: 'center',
-        marginBottom: 10,
-    },
-    sectionTitle: {
-        color: '#aaa',
-        marginBottom: 6,
-        marginTop: 10,
-    },
-    input: {
-        backgroundColor: '#111',
-        borderRadius: 8,
-        padding: 14,
-        color: '#fff',
-        fontSize: 16,
-        marginBottom: 15,
-    },
-    row: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginBottom: 10,
-    },
-    select: {
-        flex: 1,
-        backgroundColor: '#111',
-        padding: 12,
-        borderRadius: 6,
-        marginRight: 8,
-        alignItems: 'center',
-    },
-    selectText: {
-        color: '#fff',
-        fontWeight: '500',
-    },
-    currencyButton: {
-        backgroundColor: '#111',
-        padding: 10,
-        borderRadius: 6,
-        marginRight: 8,
-        marginBottom: 8,
-    },
-    active: {
-        backgroundColor: '#333',
-    },
-    currencyText: {
-        color: '#fff',
-        fontSize: 14,
-    },
-    button: {
-        backgroundColor: '#1e90ff',
-        padding: 14,
-        borderRadius: 10,
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    result: {
-        color: '#fff',
-        fontSize: 18,
-        marginTop: 20,
-        fontWeight: '500',
-        textAlign: 'center',
-    },
-});

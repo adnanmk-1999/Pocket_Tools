@@ -25,6 +25,7 @@ const colors = {
     success: '#22C55E',
     warning: '#FACC15',
     danger: '#EF4444',
+    dangerMuted: 'rgba(220, 53, 69, 0.35)',
 
     border: '#1F2937',
 };
