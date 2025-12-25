@@ -19,14 +19,24 @@ const Routes = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerStyle: { backgroundColor: '#000' },
-          headerTintColor: '#fff',
+          headerTransparent: true,
+          headerTitleAlign: 'left',
+          headerTintColor: '#FFFFFF',
+          headerTitleStyle: {
+            fontSize: 18,
+            fontWeight: '600',
+          },
+          headerStyle: {
+            backgroundColor: 'transparent',
+            elevation: 0, // Android
+            shadowOpacity: 0, // iOS
+          },
         }}
       >
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ title: 'Pocket Tools' }}
+          options={{ title: 'Pocket Tools', headerTitle: '' }}
         />
         <Stack.Screen
           name="Calculator"
