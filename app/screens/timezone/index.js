@@ -22,32 +22,51 @@ const ZONES = [
 ];
 
 /* ---------- Helpers ---------- */
+
+/* Convert local time → UTC */
+const toUTC = (date) =>
+    new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+
+/* Apply fixed offset (minutes) to a UTC date */
+const applyOffset = (date, minutes) =>
+    new Date(date.getTime() + minutes * 60000);
+
+/* Format time consistently */
 const formatTime = (date) =>
     date.toLocaleTimeString('en-GB', {
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
+        hour12: false,
     });
-
-const applyOffset = (date, minutes) =>
-    new Date(date.getTime() + minutes * 60000);
 
 /* ---------- Screen ---------- */
 const WorldClock = () => {
     const [now, setNow] = useState(new Date());
     const [zone, setZone] = useState(ZONES[0]);
 
+    /* Tick every second */
     useEffect(() => {
         const id = setInterval(() => setNow(new Date()), 1000);
         return () => clearInterval(id);
     }, []);
 
-    const displayTime =
-        zone.offset === null ? now : applyOffset(now, zone.offset);
+    /* Compute displayed time */
+    const displayTime = (() => {
+        if (zone.offset === null) {
+            // Local time (device timezone)
+            return now;
+        }
+
+        // Always normalize to UTC first
+        const utc = toUTC(now);
+        return applyOffset(utc, zone.offset);
+    })();
 
     return (
         <Screen>
             <View style={styles.container}>
+
                 {/* Helper text */}
                 <Text style={styles.helperText}>
                     Select a timezone to view current time.
@@ -62,7 +81,7 @@ const WorldClock = () => {
                     {zone.label}
                 </Text>
 
-                {/* Timezone bubbles */}
+                {/* Timezone selection */}
                 <View style={styles.wrap}>
                     {ZONES.map((z) => (
                         <Pressable
@@ -83,6 +102,7 @@ const WorldClock = () => {
                     Uses device clock. Fixed offsets are shown where full timezone
                     support is not available on all devices.
                 </Text>
+
             </View>
         </Screen>
     );
