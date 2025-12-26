@@ -44,7 +44,7 @@ Pocket Tools is currently distributed as a **manual APK** for demonstration and 
 You can download the latest Android APK from the link below:
 
 👉 **Google Drive APK Link**  
-[pocket_tools.apk](https://drive.google.com/file/d/1PkarhY2kilD3x7WGYUgpQsw6tCiXGqU1/view?usp=sharing)
+[pocket_tools.apk](https://drive.google.com/drive/folders/106Bbva1BZhuG3-6K5A_6z9EHDyH4AbhV?usp=drive_link)
 
 # 📚 Table of Contents
 
