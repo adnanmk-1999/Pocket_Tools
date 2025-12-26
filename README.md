@@ -43,7 +43,7 @@ You can download the latest Android APK from the link below:
 1. [📱 About the Application](#-about-the-application)
 2. [🧩 Application Architecture](#-application-architecture)
 3. [✨ Features](#-features)
-4. [🚀 Getting Started](#-getting-started-with-the-app)
+4. [🚀 Getting Started with the development](#-getting-started-with-the-app-development-only)
 5. [🧭 How to Use the App](#-how-to-use-the-app)
 6. [🔮 Future Enhancements](#-future-enhancements)
 7. [📄 Author](#-author)
