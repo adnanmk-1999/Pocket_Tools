@@ -174,7 +174,7 @@ Convert between common units quickly and accurately.
   <tr>
     <td align="center">
       <img src="docs/converter.gif" alt="Converter Demo" width="250"/>
-    </td
+    </td>
     <td align="center">
       <img src="docs/converter-1.jpg" alt="Length Converter Screen" width="250"/>
     </td>
