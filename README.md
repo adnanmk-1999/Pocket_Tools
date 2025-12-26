@@ -15,9 +15,17 @@
   The app is designed to work <b>entirely offline</b>, ensuring speed, privacy, and reliability without requiring any backend services or user accounts.
 </p>
 
-<p align="center">
-  <img src="docs/ui-overview.gif" alt="Pocket Tools UI Demo" width="800"/>
-</p>
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="docs/ui-demo.gif" alt="Pocket Tools UI Demo" width="300"/>
+    </td>
+    <td align="center">
+      <img src="docs/home.jpg" alt="Pocket Tools Home Screen" width="300"/>
+    </td>
+  </tr>
+</table>
+
 
 ## 📦 APK Download
 
@@ -137,10 +145,16 @@ A fast and intuitive calculator for daily arithmetic operations.
 - Clear (C) and delete (DEL) actions
 - Visual feedback with neon press effects
 
-<p align="center">
-  <!-- Screenshot placeholder -->
-  <img src="docs/screenshots/calculator.png" alt="Calculator Screen" width="300"/>
-</p>
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="docs/calculator.gif" alt="Calculator Demo" width="300"/>
+    </td>
+    <td align="center">
+      <img src="docs/calculator.jpg" alt="Calculator Screen" width="300"/>
+    </td>
+  </tr>
+</table>
 
 
 ## 🔄 Unit Converter
@@ -156,10 +170,19 @@ Convert between common units quickly and accurately.
 - Instant conversion results
 - Offline operation
 
-<p align="center">
-  <!-- Screenshot placeholder -->
-  <img src="docs/screenshots/unit-converter.png" alt="Unit Converter Screen" width="300"/>
-</p>
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="docs/converter.gif" alt="Converter Demo" width="300"/>
+    </td>
+    <td align="center">
+      <img src="docs/converter-1.jpg" alt="Length Converter Screen" width="300"/>
+    </td>
+        <td align="center">
+      <img src="docs/converter-2.jpg" alt="Temperature Converter Screen" width="300"/>
+    </td>
+  </tr>
+</table>
 
 
 ## ⏱️ Timer & Stopwatch
@@ -174,10 +197,19 @@ Track time precisely for workouts, cooking, or productivity.
 - Countdown with visual clarity
 - Reset functionality
 
-<p align="center">
-  <!-- Screenshot placeholder -->
-  <img src="docs/screenshots/timer-stopwatch.png" alt="Timer & Stopwatch Screen" width="300"/>
-</p>
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="docs/stopwatch.gif" alt="Stopwatch Demo" width="300"/>
+    </td>
+    <td align="center">
+      <img src="docs/stopwatch-1.jpg" alt="Stopwatch Screen" width="300"/>
+    </td>
+        <td align="center">
+      <img src="docs/stopwatch-2.jpg" alt="Timer Screen" width="300"/>
+    </td>
+  </tr>
+</table>
 
 
 ## ⚖️ BMI Calculator
@@ -192,10 +224,16 @@ Calculate Body Mass Index quickly using height and weight.
   - Overweight
   - Obese
 
-<p align="center">
-  <!-- Screenshot placeholder -->
-  <img src="docs/screenshots/bmi.png" alt="BMI Calculator Screen" width="300"/>
-</p>
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="docs/bmi.gif" alt="BMI Demo" width="300"/>
+    </td>
+    <td align="center">
+      <img src="docs/bmi.jpg" alt="BMI Screen" width="300"/>
+    </td>
+  </tr>
+</table>
 
 
 ## 💸 Discount Calculator
@@ -208,10 +246,16 @@ Find out how much you save when discounts are applied.
   - Amount saved
   - Final price after discount
 
-<p align="center">
-  <!-- Screenshot placeholder -->
-  <img src="docs/screenshots/discount.png" alt="Discount Calculator Screen" width="300"/>
-</p>
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="docs/discount.gif" alt="Discount Demo" width="300"/>
+    </td>
+    <td align="center">
+      <img src="docs/discount.jpg" alt="Discount Screen" width="300"/>
+    </td>
+  </tr>
+</table>
 
 
 ## 💱 Currency Converter
@@ -223,10 +267,16 @@ Convert currencies using daily reference rates.
 - Clear offline warning when internet is unavailable
 - Supports multiple international currencies
 
-<p align="center">
-  <!-- Screenshot placeholder -->
-  <img src="docs/screenshots/currency.png" alt="Currency Converter Screen" width="300"/>
-</p>
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="docs/currency.gif" alt="Currency Converter Demo" width="300"/>
+    </td>
+    <td align="center">
+      <img src="docs/currency.png" alt="Currency Converter Screen" width="300"/>
+    </td>
+  </tr>
+</table>
 
 
 ## 🌍 World Time
@@ -238,10 +288,16 @@ Check the current time across major global regions.
 - Updates every second
 - Clean bubble-based timezone selection
 
-<p align="center">
-  <!-- Screenshot placeholder -->
-  <img src="docs/screenshots/world-time.png" alt="World Time Screen" width="300"/>
-</p>
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="docs/worldtime.gif" alt="World Time Demo" width="300"/>
+    </td>
+    <td align="center">
+      <img src="docs/worldtime.jpg" alt="World Time Screen" width="300"/>
+    </td>
+  </tr>
+</table>
 
 
 ## 📈 Investment Return Simulator
@@ -254,10 +310,16 @@ Simulate long-term investment growth.
 - Investment duration
 - Final value estimation
 
-<p align="center">
-  <!-- Screenshot placeholder -->
-  <img src="docs/screenshots/investment.png" alt="Investment Simulator Screen" width="300"/>
-</p>
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="docs/investment.gif" alt="Investment Simulator Demo" width="300"/>
+    </td>
+    <td align="center">
+      <img src="docs/investment.jpg" alt="Investment Simulator Screen" width="300"/>
+    </td>
+  </tr>
+</table>
 
 
 # 🚀 Getting Started with the App (Development Only)
