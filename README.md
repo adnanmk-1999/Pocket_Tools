@@ -18,10 +18,10 @@
 <table align="center">
   <tr>
     <td align="center">
-      <img src="docs/ui-demo.gif" alt="Pocket Tools UI Demo" width="300"/>
+      <img src="docs/ui-demo.gif" alt="Pocket Tools UI Demo" width="250"/>
     </td>
     <td align="center">
-      <img src="docs/home.jpg" alt="Pocket Tools Home Screen" width="300"/>
+      <img src="docs/home.jpg" alt="Pocket Tools Home Screen" width="250"/>
     </td>
   </tr>
 </table>
@@ -148,10 +148,10 @@ A fast and intuitive calculator for daily arithmetic operations.
 <table align="center">
   <tr>
     <td align="center">
-      <img src="docs/calculator.gif" alt="Calculator Demo" width="300"/>
+      <img src="docs/calculator.gif" alt="Calculator Demo" width="250"/>
     </td>
     <td align="center">
-      <img src="docs/calculator.jpg" alt="Calculator Screen" width="300"/>
+      <img src="docs/calculator.jpg" alt="Calculator Screen" width="250"/>
     </td>
   </tr>
 </table>
@@ -200,13 +200,13 @@ Track time precisely for workouts, cooking, or productivity.
 <table align="center">
   <tr>
     <td align="center">
-      <img src="docs/stopwatch.gif" alt="Stopwatch Demo" width="300"/>
+      <img src="docs/stopwatch.gif" alt="Stopwatch Demo" width="250"/>
     </td>
     <td align="center">
-      <img src="docs/stopwatch-1.jpg" alt="Stopwatch Screen" width="300"/>
+      <img src="docs/stopwatch-1.jpg" alt="Stopwatch Screen" width="250"/>
     </td>
         <td align="center">
-      <img src="docs/stopwatch-2.jpg" alt="Timer Screen" width="300"/>
+      <img src="docs/stopwatch-2.jpg" alt="Timer Screen" width="250"/>
     </td>
   </tr>
 </table>
@@ -227,10 +227,10 @@ Calculate Body Mass Index quickly using height and weight.
 <table align="center">
   <tr>
     <td align="center">
-      <img src="docs/bmi.gif" alt="BMI Demo" width="300"/>
+      <img src="docs/bmi.gif" alt="BMI Demo" width="250"/>
     </td>
     <td align="center">
-      <img src="docs/bmi.jpg" alt="BMI Screen" width="300"/>
+      <img src="docs/bmi.jpg" alt="BMI Screen" width="250"/>
     </td>
   </tr>
 </table>
@@ -249,10 +249,10 @@ Find out how much you save when discounts are applied.
 <table align="center">
   <tr>
     <td align="center">
-      <img src="docs/discount.gif" alt="Discount Demo" width="300"/>
+      <img src="docs/discount.gif" alt="Discount Demo" width="250"/>
     </td>
     <td align="center">
-      <img src="docs/discount.jpg" alt="Discount Screen" width="300"/>
+      <img src="docs/discount.jpg" alt="Discount Screen" width="250"/>
     </td>
   </tr>
 </table>
@@ -270,10 +270,10 @@ Convert currencies using daily reference rates.
 <table align="center">
   <tr>
     <td align="center">
-      <img src="docs/currency.gif" alt="Currency Converter Demo" width="300"/>
+      <img src="docs/currency.gif" alt="Currency Converter Demo" width="250"/>
     </td>
     <td align="center">
-      <img src="docs/currency.png" alt="Currency Converter Screen" width="300"/>
+      <img src="docs/currency.png" alt="Currency Converter Screen" width="250"/>
     </td>
   </tr>
 </table>
@@ -291,10 +291,10 @@ Check the current time across major global regions.
 <table align="center">
   <tr>
     <td align="center">
-      <img src="docs/worldtime.gif" alt="World Time Demo" width="300"/>
+      <img src="docs/worldtime.gif" alt="World Time Demo" width="250"/>
     </td>
     <td align="center">
-      <img src="docs/worldtime.jpg" alt="World Time Screen" width="300"/>
+      <img src="docs/worldtime.jpg" alt="World Time Screen" width="250"/>
     </td>
   </tr>
 </table>
@@ -313,10 +313,10 @@ Simulate long-term investment growth.
 <table align="center">
   <tr>
     <td align="center">
-      <img src="docs/investment.gif" alt="Investment Simulator Demo" width="300"/>
+      <img src="docs/investment.gif" alt="Investment Simulator Demo" width="250"/>
     </td>
     <td align="center">
-      <img src="docs/investment.jpg" alt="Investment Simulator Screen" width="300"/>
+      <img src="docs/investment.jpg" alt="Investment Simulator Screen" width="250"/>
     </td>
   </tr>
 </table>
