@@ -173,13 +173,13 @@ Convert between common units quickly and accurately.
 <table align="center">
   <tr>
     <td align="center">
-      <img src="docs/converter.gif" alt="Converter Demo" width="300"/>
-    </td>
+      <img src="docs/converter.gif" alt="Converter Demo" width="250"/>
+    </td
     <td align="center">
-      <img src="docs/converter-1.jpg" alt="Length Converter Screen" width="300"/>
+      <img src="docs/converter-1.jpg" alt="Length Converter Screen" width="250"/>
     </td>
         <td align="center">
-      <img src="docs/converter-2.jpg" alt="Temperature Converter Screen" width="300"/>
+      <img src="docs/converter-2.jpg" alt="Temperature Converter Screen" width="250"/>
     </td>
   </tr>
 </table>
