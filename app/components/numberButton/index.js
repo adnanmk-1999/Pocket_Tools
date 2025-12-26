@@ -1,36 +1,63 @@
 import React from 'react';
-import {View, Text, TouchableNativeFeedback} from 'react-native';
-
+import { View, Text, Pressable } from 'react-native';
 import styles from './styles';
 
-function NumberBottons(props) {
+const BUTTONS = [
+  ['C', 'DEL', '÷'],
+  ['7', '8', '9', 'x'],
+  ['4', '5', '6', '-'],
+  ['1', '2', '3', '+'],
+  ['0', '.', '='],
+];
 
-  //This will call the bound function from its parent component
-  //to handle button press action/event
-  function handleOnPress(value){
-    requestAnimationFrame(() => {
-      props.onBtnPress(value);
-    });
+const NumberButtons = ({
+  onPress,
+  onClear,
+  onDelete,
+  onEqual,
+}) => {
+  const handlePress = (value) => {
+    if (value === 'C') return onClear();
+    if (value === 'DEL') return onDelete();
+    if (value === '=') return onEqual();
+    return onPress(value);
   };
-  
+
+  const getButtonStyle = (label) => {
+    if (label === '=') return styles.equalButton;
+    if (label === 'DEL') return styles.deleteButton;
+    return styles.defaultButton;
+  };
+
+  const getTextStyle = (label) => {
+    if (label === '=') return styles.equalText;
+    if (label === 'DEL') return styles.deleteText;
+    return styles.text;
+  };
+
   return (
-    <View style={styles.container}>
-      {props.buttons.map((row, index) => (
-        <View key={index} style={styles.contRow}>
-          {row.map((col, index) => (
-            <TouchableNativeFeedback
-              key={index}
-              onPress={() => handleOnPress(col)}
-              background={TouchableNativeFeedback.SelectableBackground()}>
-              <View style={styles.contButton}>
-                <Text style={styles.txtDefault}>{col}</Text>
-              </View>
-            </TouchableNativeFeedback>
+    <View>
+      {BUTTONS.map((row, rowIndex) => (
+        <View key={rowIndex} style={styles.row}>
+          {row.map((label) => (
+            <Pressable
+              key={label}
+              onPress={() => handlePress(label)}
+              style={({ pressed }) => [
+                styles.baseButton,
+                getButtonStyle(label),
+                pressed && styles.pressed,
+              ]}
+            >
+              <Text style={getTextStyle(label)}>
+                {label}
+              </Text>
+            </Pressable>
           ))}
         </View>
       ))}
     </View>
   );
-}
+};
 
-export default NumberBottons;
+export default NumberButtons;

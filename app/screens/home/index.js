@@ -1,47 +1,59 @@
 import React from 'react';
 import {
-  View,
-  ImageBackground,
-  Image,
-  Text,
-  TouchableOpacity,
+  ScrollView, View, Text, Pressable, Image
 } from 'react-native';
+
+import Screen from '../../screens';
 
 import styles from './styles';
 
-function Home({navigation}) {
+const tools = [
+  { name: 'Calculator', screen: 'Calculator', icon: require('../../assets/icons/calculator.png') },
+  { name: 'Unit Converter', screen: 'UnitConverter', icon: require('../../assets/icons/converter.png') },
+  { name: 'Timer & Stopwatch', screen: 'Timer', icon: require('../../assets/icons/timer.png') },
+  { name: 'BMI Calculator', screen: 'BMI', icon: require('../../assets/icons/bmi.png') },
+  { name: 'Discount Calculator', screen: 'Discount', icon: require('../../assets/icons/discount.png') },
+  { name: 'Currency Converter', screen: 'Currency', icon: require('../../assets/icons/currency.png') },
+  { name: 'World Time', screen: 'Timezone', icon: require('../../assets/icons/timezone.png') },
+  { name: 'Investment Simulator', screen: 'Investment', icon: require('../../assets/icons/investment.png') },
+]
+  ;
+
+const Home = ({ navigation }) => {
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require('../../assets/backgroundLeaves.jpg')}>
-      <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={require('../../assets/logoEMU.png')}></Image>
-        <Text>Emergency Alert Management System </Text>
+    <Screen>
+
+      <View style={styles.container}>
+        <Text style={styles.title}>Pocket Tools</Text>
+        <Text style={styles.subtitle}>Smart tools for everyday needs.</Text>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.grid}>
+            {tools.map((tool) => (
+              <Pressable
+                key={tool.name}
+                onPress={() => navigation.navigate(tool.screen)}
+                style={({ pressed }) => [
+                  styles.tile,
+                  pressed && {
+                    transform: [{ scale: 0.97 }],
+                    backgroundColor: 'rgba(17, 24, 39, 0.7)',
+                    borderColor: 'rgba(108, 92, 231, 0.4)'
+                  },
+                ]}
+              >
+                <Image source={tool.icon} style={styles.icon} />
+                <Text style={styles.tileText}>{tool.name}</Text>
+              </Pressable>
+            ))}
+          </View>
+        </ScrollView>
       </View>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Calculator')}>
-        <Text style={styles.buttonText}>Go to Calculator</Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Registration')}>
-        <Text style={styles.buttonText}>Register Yourself</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Planets')}>
-        <Text style={styles.buttonText}>List of Planets</Text>
-      </TouchableOpacity>
-
-      <View style={styles.loginButton}></View>
-      <View style={styles.registerButton}></View>
-    </ImageBackground>
+    </Screen>
   );
-}
+};
 
 export default Home;
